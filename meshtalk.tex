@@ -134,9 +134,47 @@
       
       Final Loss term is defined as \(\mathcal{L} =\mathcal{L}_{\mathsf{x}Mod}+\mathcal{L}_{\mathsf{eyelid}} \), which gives both term equal weight.
   \section{Evaluation}
-    To evaluate the network, the network is compared with  networks that lacks speech signal and uses \(\ell_2\) loss.
-     \cite{Cudeiro_2019_CVPR}
+      To evaluate the network, the network is compared with various other networks with both numerical analysis and user-study.
+    \subsection{multi-model input}
+      The network is compared with  networks that lacks speech signal and uses \(\ell_2\) loss, and identical network with Meshtalk trained with \(\ell_2\) loss.
+      Evaluation strategy is perplexity \(PP = p(c_{1:T,1:H}|a_{1:T})^(1\frac{1}{T*H})\) in this case.
+    \subsection{Disentanglement evaluation}
+      Latent space is visualized to demonstrate latent configurations that are affected by audio input and expression input are well separated to each other.
+      Also, vertexes affected by each feature are computed.
+      Interesting feature is that not only jaw and lip vertexes are affected by audio, but also eyebrow is significantly affected.
+    \subsection{lip-vertex error}
+      Lip-vertex error rate(in maximal \(\ell_2\) error, mm) is computed, and compared with VOCA\cite{Cudeiro_2019_CVPR}.
       
+    \subsection{Perceptual evaluation}
+    \begin{table}
+      \begin{center}
+        \begin{tabular}{c  c c c|c}
+            \hline
+               & favorability & & & ours better or equal \\
+            \hline
+              & competitor & equal & ours \\
+            \hline
+              ours vs VOCA\cite{Cudeiro_2019_CVPR} \\
+              full-face & 24.7\% & 20.9\% & 54.4\% & 75.3\% \\
+              lip sync & 24.7\% & 20.9\% & 54.4\% & 75.3\% \\
+              upper face & 24.7\% & 20.9\% & 54.4\% & 75.3\% \\
+            \hline
+            ours vs ground truth \\
+            full-face & 24.7\% & 20.9\% & 54.4\% & 75.3\% \\
+            lip sync & 24.7\% & 20.9\% & 54.4\% & 75.3\% \\
+            upper face & 24.7\% & 20.9\% & 54.4\% & 75.3\% \\
+            \hline
+        \end{tabular}
+      \end{center}
+      \caption{Perceptual study}
+      \label{table:eval_favorability}
+    \end{table}
+      Compared with VOCA and ground truth, user study is conducted, result is shown at \ref{table:eval_favorability}
+    \subsection{examples}
+      Example with re-targeting, dubbing is demonstrated
+    \section{limitation}
+      (1) Look-ahead about 100ms is required for audio input. This is beneficial for lip-sync for sound such as '\\p'.
+      (2) The model cannot be ran in real-time on low-cost devices. (3) If software fails to track certain parts, correlation fails. e.g hair overlaps eyebrow.
     
 %%%%%%%%%%%%%%%%%%%%%%% References %%%%%%%%%%%%%%%%%%%%%%%%%
 
